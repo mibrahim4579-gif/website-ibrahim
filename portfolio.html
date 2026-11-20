@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio &mdash; COMECIL Engineering Projects</title>
+  <meta name="description" content="View COMECIL's portfolio of completed engineering projects across Computer Science, Mechanical Engineering, and Civil Engineering.">
+  <link rel="icon" type="image/png" href="comecil-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- ============ NAVIGATION ============ -->
+  <header id="siteHeader">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <img src="comecil-icon.png" alt="COMECIL Logo">
+        <span class="brand-text">COME<span class="brand-dot">CIL</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main Navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html" class="active">Portfolio</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="contact.html">Contact</a>
+        <a href="order.html" class="mobile-drawer-order-btn">Place an Order</a>
+      </nav>
+      <div class="nav-cta">
+        <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle theme">☀️</button>
+        <a href="order.html" class="btn btn-dark">Place an Order</a>
+        <button class="burger" id="burgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ PAGE BANNER ============ -->
+    <section class="page-banner">
+      <div class="page-banner-inner">
+        <div class="breadcrumbs">
+          <a href="index.html">Home</a> &sol; <span>Portfolio</span>
+        </div>
+        <h1 class="page-banner-title">Our Portfolio &mdash; <span>Engineered Projects</span></h1>
+        <p class="page-banner-desc">
+          A showcase of successfully delivered client projects, academic research simulations, and industrial design packages across all engineering fields.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ PORTFOLIO GALLERY ============ -->
+    <section class="section" id="portfolio">
+      <div class="container">
+        <div class="section-head reveal" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <span class="section-label">Selected Case Studies</span>
+            <h2 class="section-title">Featured Project Showcase</h2>
+            <p class="section-sub">Click any project card to view technical specifications, methodologies, and deliverables.</p>
+          </div>
+          <div class="filter-row" id="filterRow" style="margin-bottom:0;">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="cs">Computer Science</button>
+            <button class="filter-btn" data-filter="mech">Mechanical</button>
+            <button class="filter-btn" data-filter="civil">Civil</button>
+          </div>
+        </div>
+
+        <div class="portfolio-grid" id="portfolioGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ PROJECT MODAL ============ -->
+    <div class="modal-overlay" id="portfolioModal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-box">
+        <button type="button" class="modal-close" id="modalClose" aria-label="Close project modal">&times;</button>
+        <div class="modal-hero" id="modalHero"></div>
+        <div class="modal-content" id="modalContent"></div>
+      </div>
+    </div>
+
+    <!-- ============ CALL TO ACTION ============ -->
+    <section class="section" style="background:var(--bg-secondary); text-align:center;">
+      <div class="container reveal">
+        <span class="section-label">Your Next Milestone</span>
+        <h2 class="section-title" style="margin-bottom:1rem;">Have a Similar Project in Mind?</h2>
+        <p class="section-sub" style="margin:0 auto 2rem; max-width:600px;">
+          Whether you need equivalent CAD drafting, FEA thermal simulation, or a cloud software architecture, our team is equipped to deliver.
+        </p>
+        <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+          <a href="order.html" class="btn btn-primary btn-lg">Start Your Project &rarr;</a>
+          <a href="services.html" class="btn btn-dark-outline btn-lg">Explore All Services</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <img src="comecil-logo.jpg" alt="COMECIL Logo" style="height:60px; width:auto; object-fit:contain;">
+        </div>
+        <p>Professional multidisciplinary engineering solutions across Computer Science, Mechanical Engineering, and Civil Engineering.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="order.html">Place an Order</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Engineering Fields</h4>
+        <ul>
+          <li><a href="services.html?discipline=computer">Computer Science</a></li>
+          <li><a href="services.html?discipline=mechanical">Mechanical Engineering</a></li>
+          <li><a href="services.html?discipline=civil">Civil Engineering</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>contact@comecil.com</li>
+          <li>+92 300 1234567</li>
+          <li>Peshawar, KP, Pakistan</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 COMECIL. All Rights Reserved. &bull; <a href="admin.html" style="color:inherit; opacity:0.85;">Admin Portal</a></span>
+      <span>Engineering ideas into reality.</span>
+    </div>
+  </footer>
+
+  <button type="button" class="to-top" id="toTopBtn" aria-label="Back to top" title="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/portfolio.js"></script>
+</body>
+</html>

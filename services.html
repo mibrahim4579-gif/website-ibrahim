@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Services &mdash; COMECIL Platform</title>
+  <meta name="description" content="Explore COMECIL's 47 professional engineering services across Computer Science, Mechanical Engineering, and Civil Engineering.">
+  <link rel="icon" type="image/png" href="comecil-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- ============ NAVIGATION ============ -->
+  <header id="siteHeader">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <img src="comecil-icon.png" alt="COMECIL Logo">
+        <span class="brand-text">COME<span class="brand-dot">CIL</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main Navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html" class="active">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="contact.html">Contact</a>
+        <a href="order.html" class="mobile-drawer-order-btn">Place an Order</a>
+      </nav>
+      <div class="nav-cta">
+        <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle theme">☀️</button>
+        <a href="order.html" class="btn btn-dark">Place an Order</a>
+        <button class="burger" id="burgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ PAGE BANNER ============ -->
+    <section class="page-banner">
+      <div class="page-banner-inner">
+        <div class="breadcrumbs">
+          <a href="index.html">Home</a> &sol; <span>Services</span>
+        </div>
+        <h1 class="page-banner-title">Engineering Services &mdash; <span>47 Capabilities</span></h1>
+        <p class="page-banner-desc">
+          Explore our complete catalogue of engineering, technology, and simulation capabilities across Computer Science, Mechanical Engineering, and Civil Engineering.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES CATALOG ============ -->
+    <section class="section" id="services" style="background:var(--bg-secondary);">
+      <div class="container">
+        <div class="section-head reveal" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <span class="section-label">Service Directory</span>
+            <h2 class="section-title">Browse by Discipline or Search</h2>
+            <p class="section-sub">Click any service to automatically pre-select it in our project order form.</p>
+          </div>
+          <span id="servicesCountBadge" style="font-family:var(--font-mono); font-size:0.85rem; font-weight:700; background:var(--bg-card); border:1px solid var(--bg-card-border); padding:0.4rem 0.9rem; border-radius:20px; color:var(--electric);">
+            47 Services Available
+          </span>
+        </div>
+
+        <div class="services-filter-row" id="servicesFilterRow">
+          <button class="service-filter-btn active" data-category="all">All Disciplines</button>
+          <button class="service-filter-btn" data-category="Computer Science">Computer Science (17)</button>
+          <button class="service-filter-btn" data-category="Mechanical Engineering">Mechanical Engineering (15)</button>
+          <button class="service-filter-btn" data-category="Civil Engineering">Civil Engineering (15)</button>
+
+          <div class="search-box">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="serviceSearchInput" placeholder="Search services (e.g. AutoCAD, Python)..." aria-label="Search engineering services">
+            <button type="button" id="serviceSearchClear" class="search-clear-btn" aria-label="Clear search input">&times;</button>
+          </div>
+        </div>
+
+        <div class="services-grid" id="servicesGrid"></div>
+
+        <div class="services-empty-state" id="servicesEmptyState" style="display:none;">
+          <p>No engineering services matched your query<span id="servicesSearchQueryDisplay"></span> in the selected category.</p>
+          <br>
+          <button type="button" class="btn btn-dark-outline" id="servicesResetBtn">Reset Filters &amp; Search</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CUSTOM SERVICE REQUEST ============ -->
+    <section class="section" style="background:var(--bg-primary);">
+      <div class="container">
+        <div class="form-card reveal" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem; padding:2.5rem;">
+          <div>
+            <span class="section-label" style="margin-bottom:0.5rem;">Custom Inquiries</span>
+            <h3 style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--text-primary); margin-bottom:0.35rem;">
+              Require a Specialized or Multi-Discipline Solution?
+            </h3>
+            <p style="color:var(--text-secondary); font-size:0.95rem; max-width:600px;">
+              If your capstone or industrial task combines multiple fields (e.g. Mechatronics, IoT Structural Health Monitoring, or Custom Scripting), our engineers can build a tailored work package.
+            </p>
+          </div>
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <a href="order.html" class="btn btn-primary btn-lg">Submit Custom Order &rarr;</a>
+            <a href="contact.html" class="btn btn-dark-outline btn-lg">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <img src="comecil-logo.jpg" alt="COMECIL Logo" style="height:60px; width:auto; object-fit:contain;">
+        </div>
+        <p>Professional multidisciplinary engineering solutions across Computer Science, Mechanical Engineering, and Civil Engineering.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="order.html">Place an Order</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Engineering Fields</h4>
+        <ul>
+          <li><a href="services.html?discipline=computer">Computer Science</a></li>
+          <li><a href="services.html?discipline=mechanical">Mechanical Engineering</a></li>
+          <li><a href="services.html?discipline=civil">Civil Engineering</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>contact@comecil.com</li>
+          <li>+92 300 1234567</li>
+          <li>Peshawar, KP, Pakistan</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 COMECIL. All Rights Reserved. &bull; <a href="admin.html" style="color:inherit; opacity:0.85;">Admin Portal</a></span>
+      <span>Engineering ideas into reality.</span>
+    </div>
+  </footer>
+
+  <button type="button" class="to-top" id="toTopBtn" aria-label="Back to top" title="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/services.js"></script>
+</body>
+</html>

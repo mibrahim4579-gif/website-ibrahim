@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works &mdash; COMECIL Engineering Process & FAQ</title>
+  <meta name="description" content="Discover COMECIL's 4-step engineering workflow and find answers to frequently asked questions about orders, files, and deliverables.">
+  <link rel="icon" type="image/png" href="comecil-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- ============ NAVIGATION ============ -->
+  <header id="siteHeader">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <img src="comecil-icon.png" alt="COMECIL Logo">
+        <span class="brand-text">COME<span class="brand-dot">CIL</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main Navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="how-it-works.html" class="active">How It Works</a>
+        <a href="contact.html">Contact</a>
+        <a href="order.html" class="mobile-drawer-order-btn">Place an Order</a>
+      </nav>
+      <div class="nav-cta">
+        <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle theme">☀️</button>
+        <a href="order.html" class="btn btn-dark">Place an Order</a>
+        <button class="burger" id="burgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ PAGE BANNER ============ -->
+    <section class="page-banner">
+      <div class="page-banner-inner">
+        <div class="breadcrumbs">
+          <a href="index.html">Home</a> &sol; <span>How It Works</span>
+        </div>
+        <h1 class="page-banner-title">Our Process &mdash; <span>How It Works</span></h1>
+        <p class="page-banner-desc">
+          A transparent, four-stage workflow engineered to ensure precision, punctuality, and complete confidentiality from inquiry to delivery.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 4-STEP WORKFLOW ============ -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head reveal" style="text-align:center;">
+          <span class="section-label">Step-by-Step Flow</span>
+          <h2 class="section-title">From Concept to Final Handover</h2>
+          <p class="section-sub" style="margin:0.75rem auto 0;">Structured stages with proactive communication every step of the way.</p>
+        </div>
+
+        <div class="how-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+          <div class="how-step reveal">
+            <div class="how-num">Stage 01</div>
+            <h3>Submit Your Order</h3>
+            <p style="margin-bottom:0.75rem;">
+              Fill out our structured order form with your project scope, engineering discipline, and specific service required. Attach relevant CAD drawings, research papers, or specification documents (PDF, DOCX, etc.).
+            </p>
+            <span style="font-family:var(--font-mono); font-size:0.78rem; color:var(--electric); font-weight:600;">Time: 2&ndash;5 Minutes</span>
+          </div>
+
+          <div class="how-step reveal" style="transition-delay:.1s;">
+            <div class="how-num">Stage 02</div>
+            <h3>Requirements Review &amp; Quote</h3>
+            <p style="margin-bottom:0.75rem;">
+              Our senior engineering leads analyze your requirements, check technical feasibility, verify software tooling, and contact you within 24 hours with a confirmed timeline and milestone quote.
+            </p>
+            <span style="font-family:var(--font-mono); font-size:0.78rem; color:var(--electric); font-weight:600;">Response: &le; 24 Hours</span>
+          </div>
+
+          <div class="how-step reveal" style="transition-delay:.2s;">
+            <div class="how-num">Stage 03</div>
+            <h3>Engineering &amp; Development</h3>
+            <p style="margin-bottom:0.75rem;">
+              Dedicated domain experts execute your models, calculations, or code. Regular progress checkpoints allow you to review intermediate drafts, request fine-tuning, and ensure full alignment.
+            </p>
+            <span style="font-family:var(--font-mono); font-size:0.78rem; color:var(--electric); font-weight:600;">Checkpoints: Milestone Based</span>
+          </div>
+
+          <div class="how-step reveal" style="transition-delay:.3s;">
+            <div class="how-num">Stage 04</div>
+            <h3>Quality Assurance &amp; Delivery</h3>
+            <p style="margin-bottom:0.75rem;">
+              Deliverables undergo strict QA verification against academic or industry standards. You receive full source code, parametric CAD models, simulation data, and comprehensive reports, backed by free revisions.
+            </p>
+            <span style="font-family:var(--font-mono); font-size:0.78rem; color:var(--electric); font-weight:600;">Includes: Free Revisions</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ACCORDION ============ -->
+    <section class="section" id="faq" style="background:var(--bg-secondary);">
+      <div class="container">
+        <div class="section-head reveal" style="text-align:center;">
+          <span class="section-label">Frequently Asked Questions</span>
+          <h2 class="section-title">Got Questions? We Have Answers</h2>
+          <p class="section-sub" style="margin:0.75rem auto 0;">Find answers to the most common questions regarding ordering, file handling, and technical support.</p>
+        </div>
+
+        <div class="faq-list" id="faqList"></div>
+
+        <div style="text-align:center; margin-top:3rem;" class="reveal">
+          <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.95rem;">Have a specific question not covered here?</p>
+          <a href="contact.html" class="btn btn-dark-outline">Contact Our Engineering Support Team &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA BANNER ============ -->
+    <section class="section" style="background:var(--navy-950); color:#fff; text-align:center;">
+      <div class="container reveal">
+        <span class="section-label" style="background:rgba(0,229,255,0.1); color:var(--cyan-400);">Start Today</span>
+        <h2 class="section-title" style="color:#fff; margin-bottom:1rem;">Ready to Put Our Process to Work?</h2>
+        <p class="section-sub" style="color:var(--steel-300); margin:0 auto 2rem; max-width:600px;">
+          Submit your project requirements today and experience professional engineering delivery done right.
+        </p>
+        <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+          <a href="order.html" class="btn btn-primary btn-lg">Submit an Order &rarr;</a>
+          <a href="portfolio.html" class="btn btn-dark-outline btn-lg" style="color:#fff; border-color:rgba(255,255,255,0.2);">View Past Projects</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <img src="comecil-logo.jpg" alt="COMECIL Logo" style="height:60px; width:auto; object-fit:contain;">
+        </div>
+        <p>Professional multidisciplinary engineering solutions across Computer Science, Mechanical Engineering, and Civil Engineering.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="order.html">Place an Order</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Engineering Fields</h4>
+        <ul>
+          <li><a href="services.html?discipline=computer">Computer Science</a></li>
+          <li><a href="services.html?discipline=mechanical">Mechanical Engineering</a></li>
+          <li><a href="services.html?discipline=civil">Civil Engineering</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>contact@comecil.com</li>
+          <li>+92 300 1234567</li>
+          <li>Peshawar, KP, Pakistan</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 COMECIL. All Rights Reserved. &bull; <a href="admin.html" style="color:inherit; opacity:0.85;">Admin Portal</a></span>
+      <span>Engineering ideas into reality.</span>
+    </div>
+  </footer>
+
+  <button type="button" class="to-top" id="toTopBtn" aria-label="Back to top" title="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/how-it-works.js"></script>
+</body>
+</html>

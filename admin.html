@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COMECIL Admin Portal — Engineering Operations</title>
+  <link rel="icon" type="image/png" href="comecil-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #070d18;
+      --bg-surface: #0e1726;
+      --bg-card: #141f33;
+      --bg-card-hover: #1b2942;
+      --border-color: #24354f;
+      --border-focus: #00e5ff;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --cyan: #00e5ff;
+      --cyan-dark: #00b4d8;
+      --cyan-glow: rgba(0, 229, 255, 0.15);
+      --green: #10b981;
+      --green-bg: rgba(16, 185, 129, 0.15);
+      --yellow: #f59e0b;
+      --yellow-bg: rgba(245, 158, 11, 0.15);
+      --blue: #3b82f6;
+      --blue-bg: rgba(59, 130, 246, 0.15);
+      --purple: #8b5cf6;
+      --purple-bg: rgba(139, 92, 246, 0.15);
+      --red: #ef4444;
+      --red-bg: rgba(239, 68, 68, 0.15);
+      --radius: 10px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation */
+    .admin-nav {
+      background: rgba(14, 23, 38, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .brand-cluster img {
+      height: 32px;
+      width: 32px;
+      object-fit: contain;
+    }
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .brand-badge {
+      background: var(--cyan-glow);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-family: var(--mono);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .user-pill {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-card);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      font-family: var(--font);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--cyan);
+      color: #070d18;
+      box-shadow: 0 2px 10px rgba(0, 229, 255, 0.25);
+    }
+    .btn-primary:hover {
+      background: #38bdf8;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border-color);
+      color: var(--text-main);
+    }
+    .btn-outline:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-glow);
+    }
+    .btn-danger {
+      background: transparent;
+      border-color: rgba(239, 68, 68, 0.4);
+      color: var(--red);
+    }
+    .btn-danger:hover {
+      background: var(--red-bg);
+      border-color: var(--red);
+    }
+    .btn-sm {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.78rem;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Login Screen */
+    #loginView {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .login-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .login-logo {
+      height: 48px;
+      margin-bottom: 1rem;
+    }
+    .login-card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .login-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+    .form-group {
+      text-align: left;
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .form-control {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 0.7rem 0.9rem;
+      color: #fff;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px var(--cyan-glow);
+    }
+    .demo-credentials-box {
+      margin-top: 1.5rem;
+      padding: 0.85rem;
+      background: rgba(0, 229, 255, 0.05);
+      border: 1px dashed rgba(0, 229, 255, 0.3);
+      border-radius: var(--radius);
+      font-size: 0.8rem;
+      text-align: left;
+      color: var(--text-muted);
+    }
+    .demo-credentials-box strong { color: var(--cyan); }
+    .demo-fill-btn {
+      margin-top: 0.5rem;
+      background: none;
+      border: none;
+      color: var(--cyan);
+      font-weight: 600;
+      font-size: 0.78rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* Admin Dashboard */
+    #dashboardView { display: none; }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 229, 255, 0.4);
+    }
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.65rem;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stat-badge {
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: var(--mono);
+      color: #fff;
+      line-height: 1;
+    }
+
+    /* Tabs Header */
+    .tabs-header {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.85rem 1.4rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tab-btn:hover { color: #fff; }
+    .tab-btn.active {
+      color: var(--cyan);
+      border-bottom-color: var(--cyan);
+    }
+    .tab-badge {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-family: var(--mono);
+    }
+    .tab-btn.active .tab-badge {
+      background: var(--cyan-glow);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    /* Filters Bar */
+    .filters-bar {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .filters-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .search-input-wrap {
+      position: relative;
+      min-width: 260px;
+    }
+    .search-input-wrap input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 0.5rem 0.85rem 0.5rem 2rem;
+      color: #fff;
+      font-size: 0.85rem;
+    }
+    .search-input-wrap svg {
+      position: absolute;
+      left: 0.65rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      fill: var(--text-dim);
+    }
+    select.filter-select {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      color: var(--text-main);
+      padding: 0.5rem 0.85rem;
+      font-size: 0.85rem;
+      font-family: var(--font);
+      cursor: pointer;
+    }
+    select.filter-select:focus {
+      outline: none;
+      border-color: var(--cyan);
+    }
+
+    /* Table Container */
+    .table-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      box-shadow: var(--shadow);
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    table.data-table th {
+      background: rgba(20, 31, 51, 0.7);
+      padding: 0.85rem 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+    table.data-table td {
+      padding: 0.95rem 1rem;
+      border-bottom: 1px solid rgba(36, 53, 79, 0.5);
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+    table.data-table tr:last-child td { border-bottom: none; }
+    table.data-table tr:hover td {
+      background: rgba(27, 41, 66, 0.5);
+    }
+
+    /* Status Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.73rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .badge-pending { background: var(--yellow-bg); color: var(--yellow); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-pending .badge-dot { background: var(--yellow); }
+    .badge-in_review { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(59, 130, 246, 0.3); }
+    .badge-in_review .badge-dot { background: var(--blue); }
+    .badge-in_progress { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(139, 92, 246, 0.3); }
+    .badge-in_progress .badge-dot { background: var(--purple); }
+    .badge-completed { background: var(--green-bg); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-completed .badge-dot { background: var(--green); }
+    .badge-cancelled { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-cancelled .badge-dot { background: var(--red); }
+    .badge-unread { background: var(--cyan-glow); color: var(--cyan); border: 1px solid rgba(0, 229, 255, 0.3); }
+    .badge-unread .badge-dot { background: var(--cyan); }
+    .badge-replied { background: var(--green-bg); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-replied .badge-dot { background: var(--green); }
+    .badge-archived { background: rgba(148, 163, 184, 0.15); color: var(--text-muted); border: 1px solid rgba(148, 163, 184, 0.3); }
+    .badge-archived .badge-dot { background: var(--text-muted); }
+
+    .order-number {
+      font-family: var(--mono);
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-backdrop.active { display: flex; }
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      max-width: 760px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: var(--bg-surface);
+      z-index: 10;
+    }
+    .modal-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+      border-radius: 4px;
+    }
+    .modal-close:hover { color: #fff; }
+    .modal-body {
+      padding: 1.5rem;
+    }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+    }
+    @media (max-width: 600px) {
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+    .detail-item-label {
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .detail-item-value {
+      font-size: 0.95rem;
+      color: #fff;
+      font-weight: 500;
+    }
+    .detail-section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.6rem;
+    }
+    .desc-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1rem;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+      white-space: pre-wrap;
+      margin-bottom: 1.5rem;
+    }
+    .attachments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .attachment-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 0.65rem 1rem;
+    }
+    .att-name {
+      font-family: var(--mono);
+      font-size: 0.84rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .att-meta {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+    .status-update-box {
+      background: rgba(0, 229, 255, 0.04);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      background: var(--bg-surface);
+      position: sticky;
+      bottom: 0;
+    }
+
+    /* Toast Notification System */
+    .toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 1000;
+    }
+    .toast {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 0.75rem 1.1rem;
+      min-width: 280px;
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      animation: slideIn 0.25s ease-out;
+      font-size: 0.88rem;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .toast.success { border-left: 4px solid var(--green); }
+    .toast.error { border-left: 4px solid var(--red); }
+    .toast.info { border-left: 4px solid var(--cyan); }
+
+    /* Empty states & loaders */
+    .empty-state {
+      padding: 3rem 1rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      fill: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Notice Banner for file:// Protocol -->
+  <div id="fileProtocolBanner" style="display:none; background:#7f1d1d; color:#fff; padding:0.9rem 1.25rem; font-size:0.88rem; border-bottom:2px solid #ef4444; text-align:center; line-height:1.5;">
+    <strong>⚠️ Important: You are viewing this page directly from file:// (filesystem)</strong><br>
+    The PHP backend and SQLite database cannot run through the file protocol. 
+    To connect to the database, double-click <strong><code>start-server.bat</code></strong> or run <code>php -c php.ini -S localhost:8000</code> in PowerShell, then navigate to: 
+    <a href="http://localhost:8000/admin.html" style="color:#38bdf8; font-weight:700; text-decoration:underline;">http://localhost:8000/admin.html</a>.
+  </div>
+
+  <!-- Admin Navigation -->
+  <nav class="admin-nav">
+    <a href="index.html" class="brand-cluster" target="_blank" title="Open Main Website">
+      <img src="comecil-icon.png" alt="COMECIL">
+      <span class="brand-title">COME<span style="color:var(--cyan)">CIL</span></span>
+      <span class="brand-badge">ADMIN CONSOLE</span>
+    </a>
+    <div class="nav-actions">
+      <div id="dbStatusPill" class="user-pill" title="Live Database Status">
+        <span id="dbStatusDot" style="color:var(--yellow)">●</span>
+        <span id="dbStatusText">Checking DB...</span>
+      </div>
+      <div id="navUserPill" class="user-pill" style="display:none;">
+        <span style="color:var(--green)">●</span>
+        <span id="navUserEmail">admin@comecil.com</span>
+      </div>
+      <a href="index.html" class="btn btn-outline btn-sm" target="_blank">🌐 View Website</a>
+      <button id="logoutBtn" class="btn btn-danger btn-sm" style="display:none;" onclick="handleLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Login View -->
+  <main id="loginView">
+    <div class="login-card">
+      <img src="comecil-logo.jpg" alt="COMECIL" class="login-logo" style="width:200px; height:auto; object-fit:contain;">
+      <h2>Engineering Portal</h2>
+      <p>Sign in to manage client orders and inquiries</p>
+      
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" class="form-control" required placeholder="admin@comecil.com">
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" class="form-control" required placeholder="••••••••••••">
+        </div>
+        <button type="submit" id="loginSubmitBtn" class="btn btn-primary" style="width:100%;">
+          Sign In to Console
+        </button>
+      </form>
+
+      <div class="demo-credentials-box">
+        <strong>Default Credentials:</strong><br>
+        Email: <code>admin@comecil.com</code><br>
+        Password: <code>comecil2026!</code><br>
+        <button type="button" class="demo-fill-btn" onclick="fillDemoCredentials()">⚡ Auto-fill Credentials</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Dashboard View -->
+  <main id="dashboardView">
+    <div class="container">
+      
+      <!-- Stats Overview Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Total Orders</span>
+            <span class="stat-badge" style="background:var(--cyan-glow); color:var(--cyan)">All-Time</span>
+          </div>
+          <div class="stat-number" id="statTotalOrders">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Pending Review</span>
+            <span class="stat-badge" style="background:var(--yellow-bg); color:var(--yellow)">Action Needed</span>
+          </div>
+          <div class="stat-number" id="statPendingOrders" style="color:var(--yellow)">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">In Progress</span>
+            <span class="stat-badge" style="background:var(--purple-bg); color:var(--purple)">Active</span>
+          </div>
+          <div class="stat-number" id="statInProgressOrders" style="color:var(--purple)">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Completed</span>
+            <span class="stat-badge" style="background:var(--green-bg); color:var(--green)">Delivered</span>
+          </div>
+          <div class="stat-number" id="statCompletedOrders" style="color:var(--green)">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Unread Inquiries</span>
+            <span class="stat-badge" style="background:var(--cyan-glow); color:var(--cyan)">Messages</span>
+          </div>
+          <div class="stat-number" id="statUnreadInquiries" style="color:var(--cyan)">0</div>
+        </div>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="tabs-header">
+        <button class="tab-btn active" id="tabBtnOrders" onclick="switchTab('orders')">
+          📋 Client Project Orders
+          <span class="tab-badge" id="tabOrdersBadge">0</span>
+        </button>
+        <button class="tab-btn" id="tabBtnInquiries" onclick="switchTab('inquiries')">
+          📬 Contact Messages
+          <span class="tab-badge" id="tabInquiriesBadge">0</span>
+        </button>
+      </div>
+
+      <!-- Tab 1: Orders Management -->
+      <section id="ordersTabSection">
+        <div class="filters-bar">
+          <div class="filters-group">
+            <div class="search-input-wrap">
+              <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              <input type="text" id="orderSearch" placeholder="Search client, order #, or title..." oninput="handleOrderFilter()">
+            </div>
+            <select id="statusFilter" class="filter-select" onchange="handleOrderFilter()">
+              <option value="all">All Statuses</option>
+              <option value="pending">Pending</option>
+              <option value="in_review">In Review</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <select id="disciplineFilter" class="filter-select" onchange="handleOrderFilter()">
+              <option value="all">All Engineering Fields</option>
+              <option value="Computer Science & IT">Computer Science & IT</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+              <option value="Mechanical Engineering">Mechanical Engineering</option>
+            </select>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="loadDashboard()">🔄 Refresh Orders</button>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Client Name & Email</th>
+                <th>Engineering Discipline</th>
+                <th>Service & Title</th>
+                <th>Deadline</th>
+                <th>Budget</th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody">
+              <tr>
+                <td colspan="8" class="empty-state">Loading project orders...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Tab 2: Contact Inquiries -->
+      <section id="inquiriesTabSection" style="display:none;">
+        <div class="filters-bar">
+          <div class="filters-group">
+            <select id="inquiryStatusFilter" class="filter-select" onchange="loadInquiries()">
+              <option value="all">All Messages</option>
+              <option value="unread">Unread Only</option>
+              <option value="replied">Replied</option>
+              <option value="archived">Archived</option>
+            </select>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="loadInquiries()">🔄 Refresh Messages</button>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Name & Email</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inquiriesTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">Loading messages...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Order Detail Modal -->
+  <div class="modal-backdrop" id="orderModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>
+          <span>Order Details:</span>
+          <span class="order-number" id="modalOrderNumber">#</span>
+        </h3>
+        <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="detail-grid">
+          <div>
+            <div class="detail-item-label">Client Name</div>
+            <div class="detail-item-value" id="modalClientName">-</div>
+          </div>
+          <div>
+            <div class="detail-item-label">Client Contact</div>
+            <div class="detail-item-value" id="modalClientContact">-</div>
+          </div>
+          <div>
+            <div class="detail-item-label">Engineering Field</div>
+            <div class="detail-item-value" id="modalDiscipline">-</div>
+          </div>
+          <div>
+            <div class="detail-item-label">Service Required</div>
+            <div class="detail-item-value" id="modalService">-</div>
+          </div>
+          <div>
+            <div class="detail-item-label">Target Deadline</div>
+            <div class="detail-item-value" id="modalDeadline">-</div>
+          </div>
+          <div>
+            <div class="detail-item-label">Budget Range</div>
+            <div class="detail-item-value" id="modalBudget">-</div>
+          </div>
+        </div>
+
+        <div class="detail-section-title">Project Title</div>
+        <div style="font-size:1.05rem; font-weight:700; color:#fff; margin-bottom:1rem;" id="modalProjectTitle">-</div>
+
+        <div class="detail-section-title">Project Description / Scope</div>
+        <div class="desc-box" id="modalDescription">-</div>
+
+        <div class="detail-section-title">Uploaded Project Files (<span id="modalAttachmentCount">0</span>)</div>
+        <div class="attachments-list" id="modalAttachmentsList">
+          <div style="color:var(--text-dim); font-size:0.85rem;">No files attached to this order.</div>
+        </div>
+
+        <div class="status-update-box">
+          <div class="detail-section-title" style="color:var(--cyan);">Update Order Status & Internal Notes</div>
+          <div style="display:grid; grid-template-columns: 200px 1fr; gap:1rem; margin-top:0.75rem;">
+            <div>
+              <label style="font-size:0.78rem; font-weight:600; color:var(--text-muted); display:block; margin-bottom:0.35rem;">Status</label>
+              <select id="modalStatusSelect" class="form-control">
+                <option value="pending">Pending</option>
+                <option value="in_review">In Review</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.78rem; font-weight:600; color:var(--text-muted); display:block; margin-bottom:0.35rem;">Admin Notes</label>
+              <textarea id="modalAdminNotes" class="form-control" rows="2" placeholder="Internal remarks, assigned engineer, tracking updates..."></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeOrderModal()">Cancel</button>
+        <button class="btn btn-primary" id="saveOrderStatusBtn" onclick="saveOrderStatus()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    let activeOrders = [];
+    let currentOrderId = null;
+
+    // Toast Utility
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+      toast.innerHTML = `<span style="font-weight:700;">${icon}</span><span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function fillDemoCredentials() {
+      document.getElementById('loginEmail').value = 'admin@comecil.com';
+      document.getElementById('loginPassword').value = 'comecil2026!';
+    }
+
+    // Check Auth & DB Status on Load
+    async function checkAuth() {
+      if (window.location.protocol === 'file:') {
+        const banner = document.getElementById('fileProtocolBanner');
+        if (banner) banner.style.display = 'block';
+        updateDbStatus(false, 'file:// (Server Needed)');
+        showLogin();
+        return;
+      }
+
+      try {
+        const res = await fetch('api/auth.php?action=check');
+        const data = await res.json().catch(() => null);
+        if (data && data.success) {
+          if (data.db) {
+            if (data.db.driver === 'mysql') {
+              updateDbStatus(true, `MySQL: ${data.db.database}`, '#10b981');
+            } else if (data.db.is_fallback) {
+              updateDbStatus(true, 'SQLite (MySQL offline)', '#f59e0b');
+            } else {
+              updateDbStatus(true, 'SQLite: comecil.db', '#38bdf8');
+            }
+          } else {
+            updateDbStatus(true, 'Database Connected', '#10b981');
+          }
+
+          if (data.authenticated) {
+            showDashboard(data.user);
+          } else {
+            showLogin();
+          }
+        } else {
+          const errDetail = (data && data.message) ? data.message : 'Database Error';
+          updateDbStatus(false, 'Database Error', '#ef4444');
+          showToast(errDetail, 'error');
+          showLogin();
+        }
+      } catch (err) {
+        updateDbStatus(false, 'Server Offline', '#ef4444');
+        showLogin();
+      }
+    }
+
+    function updateDbStatus(ok, text, color) {
+      const dot = document.getElementById('dbStatusDot');
+      const label = document.getElementById('dbStatusText');
+      if (dot) dot.style.color = color || (ok ? 'var(--green)' : 'var(--red)');
+      if (label) label.textContent = text;
+    }
+
+    function showLogin() {
+      document.getElementById('loginView').style.display = 'flex';
+      document.getElementById('dashboardView').style.display = 'none';
+      document.getElementById('navUserPill').style.display = 'none';
+      document.getElementById('logoutBtn').style.display = 'none';
+    }
+
+    function showDashboard(user) {
+      document.getElementById('loginView').style.display = 'none';
+      document.getElementById('dashboardView').style.display = 'block';
+      document.getElementById('navUserPill').style.display = 'flex';
+      document.getElementById('navUserEmail').textContent = user.email;
+      document.getElementById('logoutBtn').style.display = 'inline-flex';
+      loadDashboard();
+    }
+
+    // Handle Login
+    async function handleLogin(e) {
+      e.preventDefault();
+      if (window.location.protocol === 'file:') {
+        showToast('Cannot connect via file://. Please start server via start-server.bat and visit http://localhost:8000/admin.html', 'error');
+        return;
+      }
+
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const btn = document.getElementById('loginSubmitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Verifying...';
+
+      try {
+        const res = await fetch('api/auth.php?action=login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json().catch(() => null);
+        if (res.ok && data && data.success) {
+          showToast('Login successful!', 'success');
+          updateDbStatus(true, 'Database Connected');
+          showDashboard(data.user);
+        } else {
+          const errText = (data && (data.message || data.error)) || `Server returned error (${res.status})`;
+          showToast(errText, 'error');
+        }
+      } catch (err) {
+        showToast('Connection failed. Please ensure PHP server is running (start-server.bat).', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Sign In to Console';
+      }
+    }
+
+    // Handle Logout
+    async function handleLogout() {
+      try {
+        await fetch('api/auth.php?action=logout');
+        showToast('Signed out successfully.', 'info');
+        showLogin();
+      } catch (err) {
+        showLogin();
+      }
+    }
+
+    // Switch Tabs
+    function switchTab(tab) {
+      const ordersSection = document.getElementById('ordersTabSection');
+      const inquiriesSection = document.getElementById('inquiriesTabSection');
+      const ordersBtn = document.getElementById('tabBtnOrders');
+      const inquiriesBtn = document.getElementById('tabBtnInquiries');
+
+      if (tab === 'orders') {
+        ordersSection.style.display = 'block';
+        inquiriesSection.style.display = 'none';
+        ordersBtn.classList.add('active');
+        inquiriesBtn.classList.remove('active');
+      } else {
+        ordersSection.style.display = 'none';
+        inquiriesSection.style.display = 'block';
+        ordersBtn.classList.remove('active');
+        inquiriesBtn.classList.add('active');
+        loadInquiries();
+      }
+    }
+
+    // Load Dashboard Data & Stats
+    async function loadDashboard() {
+      try {
+        // Fetch stats
+        const statsRes = await fetch('api/admin.php?action=stats');
+        const statsData = await statsRes.json();
+        if (statsData.success) {
+          const s = statsData.stats;
+          document.getElementById('statTotalOrders').textContent = s.total_orders;
+          document.getElementById('statPendingOrders').textContent = s.pending_orders;
+          document.getElementById('statInProgressOrders').textContent = s.in_progress_orders;
+          document.getElementById('statCompletedOrders').textContent = s.completed_orders;
+          document.getElementById('statUnreadInquiries').textContent = s.unread_inquiries;
+          document.getElementById('tabOrdersBadge').textContent = s.total_orders;
+          document.getElementById('tabInquiriesBadge').textContent = s.unread_inquiries;
+        }
+
+        // Fetch orders list
+        loadOrders();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Load Orders
+    async function loadOrders() {
+      const tbody = document.getElementById('ordersTableBody');
+      tbody.innerHTML = `<tr><td colspan="8" class="empty-state">Loading project orders...</td></tr>`;
+
+      try {
+        const res = await fetch('api/orders.php');
+        const data = await res.json();
+        if (data.success) {
+          activeOrders = data.data || [];
+          renderOrdersTable(activeOrders);
+        } else {
+          tbody.innerHTML = `<tr><td colspan="8" class="empty-state" style="color:var(--red);">${data.error || 'Failed to load orders'}</td></tr>`;
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8" class="empty-state" style="color:var(--red);">Failed to connect to orders API.</td></tr>`;
+      }
+    }
+
+    // Filter and search orders
+    function handleOrderFilter() {
+      const q = document.getElementById('orderSearch').value.toLowerCase().trim();
+      const st = document.getElementById('statusFilter').value;
+      const df = document.getElementById('disciplineFilter').value;
+
+      const filtered = activeOrders.filter(o => {
+        const matchSearch = !q || 
+          (o.order_number && o.order_number.toLowerCase().includes(q)) ||
+          (o.client_name && o.client_name.toLowerCase().includes(q)) ||
+          (o.client_email && o.client_email.toLowerCase().includes(q)) ||
+          (o.service_name && o.service_name.toLowerCase().includes(q)) ||
+          (o.project_title && o.project_title.toLowerCase().includes(q));
+        const matchStatus = st === 'all' || o.status === st;
+        const matchDiscipline = df === 'all' || o.discipline_name === df;
+        return matchSearch && matchStatus && matchDiscipline;
+      });
+
+      renderOrdersTable(filtered);
+    }
+
+    function renderOrdersTable(orders) {
+      const tbody = document.getElementById('ordersTableBody');
+      if (!orders || orders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="empty-state">No matching orders found.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = orders.map(o => {
+        const statusMap = {
+          pending: '<span class="badge badge-pending"><span class="badge-dot"></span>Pending</span>',
+          in_review: '<span class="badge badge-in_review"><span class="badge-dot"></span>In Review</span>',
+          in_progress: '<span class="badge badge-in_progress"><span class="badge-dot"></span>In Progress</span>',
+          completed: '<span class="badge badge-completed"><span class="badge-dot"></span>Completed</span>',
+          cancelled: '<span class="badge badge-cancelled"><span class="badge-dot"></span>Cancelled</span>'
+        };
+        const statusBadge = statusMap[o.status] || `<span class="badge">${o.status}</span>`;
+
+        return `
+          <tr>
+            <td><span class="order-number">${escapeHtml(o.order_number)}</span></td>
+            <td>
+              <div style="font-weight:600; color:#fff;">${escapeHtml(o.client_name)}</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(o.client_email)}</div>
+            </td>
+            <td><span style="font-size:0.82rem; color:#cbd5e1;">${escapeHtml(o.discipline_name)}</span></td>
+            <td>
+              <div style="font-weight:600; font-size:0.85rem;">${escapeHtml(o.service_name)}</div>
+              <div style="font-size:0.75rem; color:var(--text-dim); max-width:220px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                ${escapeHtml(o.project_title)}
+              </div>
+            </td>
+            <td><span style="font-family:var(--mono); font-size:0.82rem;">${escapeHtml(o.deadline_date || '-')}</span></td>
+            <td><span style="font-size:0.82rem; color:var(--text-muted);">${escapeHtml(o.budget_range || '-')}</span></td>
+            <td>${statusBadge}</td>
+            <td style="text-align:right;">
+              <button class="btn btn-outline btn-sm" onclick="viewOrderDetail(${o.id})">View Details</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // View Order Detail Modal
+    async function viewOrderDetail(id) {
+      currentOrderId = id;
+      try {
+        const res = await fetch(`api/admin.php?action=order_detail&id=${id}`);
+        const data = await res.json();
+        if (!data.success) {
+          showToast(data.error || 'Failed to load order', 'error');
+          return;
+        }
+
+        const o = data.data;
+        document.getElementById('modalOrderNumber').textContent = o.order_number;
+        document.getElementById('modalClientName').textContent = o.client_name;
+        document.getElementById('modalClientContact').innerHTML = `${escapeHtml(o.client_email)}<br>${escapeHtml(o.client_phone || '-')}`;
+        document.getElementById('modalDiscipline').textContent = o.discipline_name;
+        document.getElementById('modalService').textContent = o.service_name;
+        document.getElementById('modalDeadline').textContent = o.deadline_date;
+        document.getElementById('modalBudget').textContent = o.budget_range;
+        document.getElementById('modalProjectTitle').textContent = o.project_title;
+        document.getElementById('modalDescription').textContent = o.project_description;
+        document.getElementById('modalStatusSelect').value = o.status;
+        document.getElementById('modalAdminNotes').value = o.admin_notes || '';
+
+        // Attachments
+        const attList = document.getElementById('modalAttachmentsList');
+        const count = o.attachments ? o.attachments.length : 0;
+        document.getElementById('modalAttachmentCount').textContent = count;
+
+        if (count > 0) {
+          attList.innerHTML = o.attachments.map(a => `
+            <div class="attachment-row">
+              <div>
+                <div class="att-name">📄 ${escapeHtml(a.original_name)}</div>
+                <div class="att-meta">${formatBytes(a.file_size)} • ${escapeHtml(a.mime_type)}</div>
+              </div>
+              <a href="api/download.php?id=${a.id}" class="btn btn-primary btn-sm" download target="_blank">
+                ⬇ Download
+              </a>
+            </div>
+          `).join('');
+        } else {
+          attList.innerHTML = `<div style="color:var(--text-dim); font-size:0.85rem;">No files attached to this order.</div>`;
+        }
+
+        document.getElementById('orderModal').classList.add('active');
+      } catch (err) {
+        showToast('Failed to load order details.', 'error');
+      }
+    }
+
+    function closeOrderModal() {
+      document.getElementById('orderModal').classList.remove('active');
+      currentOrderId = null;
+    }
+
+    // Save Updated Status & Admin Notes
+    async function saveOrderStatus() {
+      if (!currentOrderId) return;
+      const btn = document.getElementById('saveOrderStatusBtn');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      const status = document.getElementById('modalStatusSelect').value;
+      const admin_notes = document.getElementById('modalAdminNotes').value;
+
+      try {
+        const res = await fetch('api/admin.php?action=update_order_status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            order_id: currentOrderId,
+            status: status,
+            admin_notes: admin_notes
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`Order status updated to '${status}'.`, 'success');
+          closeOrderModal();
+          loadDashboard();
+        } else {
+          showToast(data.error || 'Failed to update order', 'error');
+        }
+      } catch (err) {
+        showToast('Connection error updating order.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Changes';
+      }
+    }
+
+    // Load Inquiries
+    async function loadInquiries() {
+      const status = document.getElementById('inquiryStatusFilter').value;
+      const tbody = document.getElementById('inquiriesTableBody');
+      tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Loading messages...</td></tr>`;
+
+      try {
+        const res = await fetch(`api/admin.php?action=inquiries&status=${status}`);
+        const data = await res.json();
+        if (data.success) {
+          const list = data.data || [];
+          if (list.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No inquiries found.</td></tr>`;
+            return;
+          }
+
+          const badgeMap = {
+            unread: '<span class="badge badge-unread"><span class="badge-dot"></span>Unread</span>',
+            replied: '<span class="badge badge-replied"><span class="badge-dot"></span>Replied</span>',
+            archived: '<span class="badge badge-archived"><span class="badge-dot"></span>Archived</span>'
+          };
+
+          tbody.innerHTML = list.map(m => `
+            <tr>
+              <td><span style="font-family:var(--mono); font-size:0.75rem; color:var(--text-muted);">${escapeHtml(m.created_at ? m.created_at.slice(0, 16) : '')}</span></td>
+              <td>
+                <div style="font-weight:600; color:#fff;">${escapeHtml(m.full_name)}</div>
+                <div style="font-size:0.75rem; color:var(--cyan);"><a href="mailto:${escapeHtml(m.email)}" style="color:inherit; text-decoration:none;">${escapeHtml(m.email)}</a></div>
+              </td>
+              <td><span style="font-weight:600; font-size:0.85rem;">${escapeHtml(m.subject || 'General Inquiry')}</span></td>
+              <td style="max-width:320px;">
+                <div style="font-size:0.85rem; color:#cbd5e1; white-space:pre-wrap; line-height:1.4;">${escapeHtml(m.message)}</div>
+              </td>
+              <td>${badgeMap[m.status] || m.status}</td>
+              <td style="text-align:right;">
+                <div style="display:flex; justify-content:flex-end; gap:0.4rem;">
+                  <a href="mailto:${escapeHtml(m.email)}?subject=Re: ${encodeURIComponent(m.subject || 'COMECIL Inquiry')}" class="btn btn-outline btn-sm" onclick="markInquiryReplied(${m.id})">✉ Reply</a>
+                  ${m.status === 'unread' ? `<button class="btn btn-primary btn-sm" onclick="updateInquiry(${m.id}, 'replied')">✓ Mark Replied</button>` : ''}
+                  ${m.status !== 'archived' ? `<button class="btn btn-outline btn-sm" onclick="updateInquiry(${m.id}, 'archived')">Archive</button>` : ''}
+                </div>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-state" style="color:var(--red);">Failed to load inquiries.</td></tr>`;
+      }
+    }
+
+    async function updateInquiry(id, status) {
+      try {
+        const res = await fetch('api/admin.php?action=update_inquiry_status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ inquiry_id: id, status: status })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`Inquiry marked as ${status}.`, 'success');
+          loadInquiries();
+          loadDashboard();
+        } else {
+          showToast(data.error || 'Failed to update', 'error');
+        }
+      } catch (err) {
+        showToast('Connection error', 'error');
+      }
+    }
+
+    function markInquiryReplied(id) {
+      setTimeout(() => updateInquiry(id, 'replied'), 2000);
+    }
+
+    function formatBytes(bytes, decimals = 1) {
+      if (!bytes || bytes === 0) return '0 B';
+      const k = 1024;
+      const dm = decimals < 0 ? 0 : decimals;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, s => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[s]));
+    }
+
+    // Close modal on Escape or Outside click
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('orderModal').classList.contains('active')) {
+        closeOrderModal();
+      }
+    });
+    document.getElementById('orderModal').addEventListener('click', (e) => {
+      if (e.target.id === 'orderModal') closeOrderModal();
+    });
+
+    // Initialize
+    checkAuth();
+  </script>
+</body>
+</html>
